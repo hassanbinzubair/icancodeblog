@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import mongoose from "mongoose";
 import { fileURLToPath } from "url";
 import { engine } from "express-handlebars";
 import { connectDB } from "./src/config/db.js";
@@ -8,11 +9,25 @@ import blogRoutes from "./src/blog/blog.route.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
+const isVercel = process.env.VERCEL === "1";
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.join(currentDirectory, "views"));
 app.use(express.static(path.join(currentDirectory, "src", "public")));
+
+app.use(async (req, res, next) => {
+  try {
+    if (mongoose.connection.readyState === 1) {
+      return next();
+    }
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get("/", blogRoutes);
 app.use("/blogs", blogRoutes);
 app.get("/about", (req, res) => {
@@ -41,4 +56,10 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-startServer();
+
+if (!isVercel) {
+  startServer();
+}
+
+export { app };
+export default app;
