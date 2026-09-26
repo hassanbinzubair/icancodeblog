@@ -1,0 +1,77 @@
+<style>
+  .blogs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .blog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    width: 260px;
+    height: 400px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+  }
+  @media (max-width: 550px) {
+    .blog {
+      width: 90vw;
+    }
+  }
+  .blog a {
+    text-decoration: none;
+    color: black;
+    background-color: #ccc;
+    border: 2px solid #949494;
+    border-radius: 5px;
+    height: 35px;
+    width: 100px;
+    text-align: center;
+    align-content: center;
+  }
+  .blog a:hover {
+    transition: 300ms;
+    color: #ccc;
+    background-color: black;
+  }
+  .cardimg {
+    width: 100%;
+    height: 50%;
+    position: relative;
+    top: 0;
+    background: url(0001.jpg);
+    background-position: center;
+    background-size: max(100%, 300px);
+    border-radius: 5px;
+  }
+  #blogp2 {
+    height: 40%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>
+<header>
+  <h1>Welcome to ICanCode | The Best Blog for Developers &amp; Programmers</h1>
+</header>
+<h1>Explore our Blogs</h1>
+<div class="blogs">
+  {{#each Blogs}}
+    <div class="blog">
+      <div class="cardimg"></div>
+      <span id="blogp2">
+        <h3>{{this.title}}</h3>
+      </span>
+      <a href="/blogs/{{this.slug}}">Read More</a>
+    </div>
+  {{/each}}
+</div>
