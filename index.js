@@ -62,5 +62,4 @@ if (!isVercel) {
   startServer();
 }
 
-export { app };
 export default app;
