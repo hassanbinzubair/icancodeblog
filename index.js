@@ -10,7 +10,6 @@ import blogRoutes from "./src/blog/blog.route.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
-const isVercel = process.env.VERCEL === "1";
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -58,8 +57,4 @@ const startServer = async () => {
   }
 };
 
-if (!isVercel) {
   startServer();
-}
-
-export default app;
